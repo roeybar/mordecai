@@ -1,0 +1,12 @@
+{
+ "_doc": "The README challenge sentences. Each item names a torture_he.json item by id; the sentence (field named by source) and the intended meaning (gold_<target>) are read from that golden, so the README, the tests and the golden share one source. homographs gives the intended sense of each ambiguous word as reading (source-language surface) and gloss (target-language surface) on the demo frames; demo_output is the exact demo-provider output. Both are hand-set for the demo frames and are not an accuracy result.",
+ "items": [
+  {"id": "mw-attention", "source": "he", "target": "en",
+   "homographs": [{"bare": "שם", "occ": 1, "reading": "שָׂם", "gloss": "took"},
+                  {"bare": "לב", "occ": 1, "reading": "לֵב", "gloss": "notice"}],
+   "demo_output": "he took notice that-the-door open"},
+  {"id": "llm-bark", "source": "en", "target": "he",
+   "homographs": [{"bare": "bark", "occ": 1, "reading": "bark", "gloss": "קְלִיפָּה"}],
+   "demo_output": "הַ קְלִיפָּה שֶׁל הַ אַלּוֹן הָיְתָה מְחֻסְפֶּסֶת"}
+ ]
+}
