@@ -1,0 +1,15 @@
+{
+  "_note": "Arabic torture seed. Arabic forms are standard reconstructions and are not reviewed by a speaker. Mirrors torture_he.json by arm: frame-solvable (encode-once resources + control layer) vs llm (model judgment). en<->ar. Categories drawn from the genuine Arabic-specific failure modes: near-homophone minimal pairs, semantic-precision (English collapses Arabic distinctions), dialect register, nisba onomastics.",
+  "items": [
+    {"id": "ss-shabba-sabiyya", "category": "similar_sounding", "arm": "frame", "ar": "شابّة / سبيّة", "gold_en": "a young woman (šābba) / a captive woman (sabiyya)", "trap": "near-homophones differing by one consonant (ش/س) + shadda + vowels; meanings are worlds apart and a mistake here is grave. plurals diverge: شابّات / سبايا. high-stakes pin for the control layer."},
+
+    {"id": "sp-peace", "category": "semantic_precision", "arm": "frame", "en": "They agreed to peace.", "gold_ar": "هدنة (temporary truce) أو سلام (permanent peace) — MUST disambiguate", "trap": "English 'peace' collapses هدنة (hudna = a TEMPORARY truce) and سلام (salām = PERMANENT peace). picking wrong changes the meaning materially. encode-once precision pair."},
+    {"id": "sp-void", "category": "semantic_precision", "arm": "frame", "en": "The contract is void.", "gold_ar": "العقد باطل", "trap": "'void/null' = باطل (bāṭil) - legal 'null and void', not merely 'false'. domain-precision term."},
+
+    {"id": "dl-mush-minna", "category": "dialect", "arm": "frame", "en": "He's not one of us.", "gold_ar": "MSA: ليس منّا / dialectal (Levantine-Egyptian): مش مننا", "trap": "register choice: مش (mush) is colloquial negation; MSA uses ليس/لا. translating into the WRONG register is a quality failure even with 'correct' words. needs an explicit dialect policy (default MSA)."},
+
+    {"id": "on-nisba", "category": "nisba_onomastics", "arm": "frame", "en": "Mr. al-Masri arrived.", "gold_ar": "السيّد المصري وصل", "trap": "المصري (al-Masri) is a SURNAME (nisba '-i' = origin-marker, 'the Egyptian'), NOT to be translated as the adjective 'the Egyptian'. nisba names must be tagged as person-entities and transliterated, not glossed. (cf. al-Hijazi, al-Fayyumi.)"},
+
+    {"id": "sp-truce-precedent", "category": "semantic_precision", "arm": "llm", "en": "a temporary truce granted to a stronger party", "gold_ar": "هدنة مؤقتة", "trap": "world-knowledge term: هدنة carries a specific tribal/customary 'temporary by design' sense English 'truce' only approximates. model-judgment + precision-pair."}
+  ]
+}

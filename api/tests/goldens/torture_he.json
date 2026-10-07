@@ -1,0 +1,87 @@
+{
+  "_note": "THOROUGH torture suite - adversarial frontier, by category, split by WHICH ARM it tests. TWO families: (A) FRAME-SOLVABLE - homograph / multiword / similar_sounding / illogical_grammatical - structurally resolvable by the lexicon + selectional solver. (B) LLM-JUDGMENT - idiom / collective_noun / domain_sense / register - needs world-knowledge & fluency the frame layer does NOT encode; this is where a raw strong model is already the bar. The illogical_grammatical set is the anti-test: the selectional solver must disambiguate WITHOUT 'fixing' intentional anomalies. he<->en + niqqud; a native-speaker reviewer is ground truth.",
+  "items": [
+    {"id": "mw-school", "category": "multiword", "arm": "frame", "he": "בית ספר", "gold_en": "a school", "trap": "smikhut; NOT 'house of a book'."},
+    {"id": "mw-lawyer", "category": "multiword", "arm": "frame", "he": "עורך דין", "gold_en": "a lawyer", "trap": "NOT 'editor of law'."},
+    {"id": "mw-attention", "category": "multiword", "arm": "frame", "he": "הוא שם לב שהדלת פתוחה", "gold_en": "He noticed the door was open.", "trap": "שם לב = noticed, NOT 'put a heart'."},
+    {"id": "mw-exceptional", "category": "multiword", "arm": "frame", "he": "מקרה יוצא דופן", "gold_en": "an exceptional case", "trap": "NOT 'exits a rib/wall'."},
+    {"id": "mw-double", "category": "multiword", "arm": "frame", "he": "הסרט היה חבל על הזמן", "gold_en": "The movie was amazing.", "trap": "חבל על הזמן = 'amazing' OR 'waste of time'; here positive. idiom + polarity-by-context."},
+    {"id": "mw-illusion", "category": "multiword", "arm": "frame", "he": "כל זה אחיזת עיניים", "gold_en": "All of this is an illusion.", "trap": "NOT 'holding of eyes'."},
+    {"id": "mw-sandcastle", "category": "multiword", "arm": "frame", "he": "התוכנית שלו הייתה ארמון חול", "gold_en": "His plan was a house of cards.", "trap": "ארמון חול literal 'sandcastle'; idiom = impressive thing that crumbles."},
+
+    {"id": "ss-hair-storm", "category": "similar_sounding", "arm": "frame", "he": "שערה / סערה", "gold_en": "a hair (śaʿara) / a storm (səʿara)", "trap": "sin vs samekh flips hair<->storm."},
+    {"id": "ss-milk-dog", "category": "similar_sounding", "arm": "frame", "he": "חלב / כלב", "gold_en": "milk (ḥalav) / a dog (kelev)", "trap": "ḥet vs kaf."},
+    {"id": "ss-drug-name", "category": "similar_sounding", "arm": "frame", "he": "סם / שם", "gold_en": "a drug (sam) / there~name (šam/šem)", "trap": "samekh vs shin."},
+    {"id": "ss-wages-dam-beer", "category": "similar_sounding", "arm": "frame", "he": "שכר / סכר / שיכר", "gold_en": "wages / a dam / strong drink", "trap": "sin/samekh/shin three-way on ש־כ־ר."},
+    {"id": "ss-battle-near", "category": "similar_sounding", "arm": "frame", "he": "קרב / קרוב", "gold_en": "a battle (qrav) / near~a relative (qarov)", "trap": "one vav."},
+    {"id": "ss-teacher-awe", "category": "similar_sounding", "arm": "frame", "he": "מורה / מורא", "gold_en": "a teacher (more) / dread (mora)", "trap": "he vs alef final."},
+
+    {"id": "ill-green-idea", "category": "illogical_grammatical", "arm": "frame-anti", "he": "הרעיון הירוק ישן בזעם", "gold_en": "The green idea slept furiously.", "trap": "grammatical, selectionally impossible. PRESERVE; do NOT fix. anti-test for the solver."},
+    {"id": "ill-stone-tuesday", "category": "illogical_grammatical", "arm": "frame-anti", "he": "האבן הרזה בלעה את יום שלישי", "gold_en": "The thin stone swallowed Tuesday.", "trap": "valid grammar, impossible semantics; preserve the absurdity."},
+    {"id": "ill-silence-paints", "category": "illogical_grammatical", "arm": "frame-anti", "he": "השתיקה צבעה את המספר שבע בריח כחול", "gold_en": "The silence painted the number seven a blue smell.", "trap": "every selectional restriction violated, fully grammatical. faithfulness test."},
+    {"id": "ill-tomorrow-married", "category": "illogical_grammatical", "arm": "frame-anti", "he": "מחר התחתן עם הזיכרון של אתמול", "gold_en": "Tomorrow married yesterday's memory.", "trap": "time-as-agent; do not normalize."},
+    {"id": "ill-stone-thirst", "category": "illogical_grammatical", "arm": "frame-anti", "he": "צמא האבן שר שיר משולש", "gold_en": "The stone's thirst sang a triangular song.", "trap": "שר=sang (homograph) inside an absurd frame - read it by grammar, but do NOT fix the impossible agent."},
+
+    {"id": "llm-flock", "category": "collective_noun", "arm": "llm", "he": "להקת זרזירים חגה מעל הביצה", "en": "A flock of starlings wheeled over the marsh.", "gold_he": "להקת זרזירים", "trap": "flock of BIRDS = להקה, not עדר (herd, for cattle). pure model knowledge - frames don't encode collective-noun selection."},
+    {"id": "llm-quench", "category": "domain_sense", "arm": "llm", "he": "הנפח קירר את הפרסה הלוהטת במים", "en": "The blacksmith quenched the glowing horseshoe in water.", "gold_he": "קירר/שיקע (לא כיבה)", "trap": "metallurgical 'quench' = rapid COOLING, not 'extinguish' (כיבה). domain world-knowledge."},
+    {"id": "llm-bucket", "category": "idiom", "arm": "llm", "en": "He kicked the bucket last winter.", "gold_he": "הוא הלך לעולמו בחורף שעבר", "trap": "die, NOT literal kick+bucket. idiom faithfulness."},
+    {"id": "llm-catsdogs", "category": "idiom", "arm": "llm", "en": "It's raining cats and dogs.", "gold_he": "יורד גשם שוטף / זלעפות", "trap": "heavy rain, not literal."},
+    {"id": "llm-file-file", "category": "polysemy", "arm": "llm", "en": "She filed the report, then filed her nails.", "gold_he": "היא הגישה את הדוח, ואז ליטשה את ציפורניה", "trap": "two senses of 'file' in one sentence (submit / smooth)."},
+    {"id": "llm-bark", "category": "polysemy", "arm": "llm", "en": "The bark of the oak was rough.", "gold_he": "קליפת האלון הייתה מחוספסת", "trap": "tree bark (קליפה), not dog-bark (נביחה). context-only."},
+    {"id": "llm-acquit", "category": "register", "arm": "llm", "en": "The defendant was acquitted on a technicality.", "gold_he": "הנאשם זוכה בשל פגם פרוצדורלי", "trap": "legal register: acquitted=זוכה, technicality=פגם פרוצדורלי/טכני. register + domain term."},
+
+    {"id": "cn-murder-crows", "category": "collective_noun", "arm": "llm->frame", "en": "A murder of crows settled on the roof.", "gold_he": "להקת עורבים נחתה על הגג", "trap": "'murder' here = a collective noun -> להקה; must NOT be רצח (homicide). literal head is a landmine. encodable as a collective-noun resource."},
+    {"id": "cn-pride-lions", "category": "collective_noun", "arm": "llm->frame", "en": "A pride of lions rested in the shade.", "gold_he": "להקת אריות נחה בצל", "trap": "'pride' = collective -> להקה; NOT גאווה (vanity)."},
+    {"id": "cn-school-fish", "category": "collective_noun", "arm": "llm->frame", "en": "A school of fish darted past the reef.", "gold_he": "להקת דגים חלפה ליד שונית האלמוגים", "trap": "'school' = collective -> להקה; NOT בית ספר."},
+    {"id": "cn-crash-rhinos", "category": "collective_noun", "arm": "llm->frame", "en": "A crash of rhinos thundered across the plain.", "gold_he": "עדר קרנפים שעט על פני המישור", "trap": "'crash' = collective -> עדר; NOT התרסקות (collision)."},
+    {"id": "cn-charm-finches", "category": "collective_noun", "arm": "llm->frame", "en": "A charm of finches scattered from the hedge.", "gold_he": "להקת פרושונים התפזרה מן הגדר החיה", "trap": "'charm' = collective -> להקה; NOT קסם (magic)."},
+    {"id": "cn-parliament-owls", "category": "collective_noun", "arm": "llm->frame", "en": "A parliament of owls watched from the oak.", "gold_he": "להקת ינשופים צפתה מן האלון", "trap": "'parliament' = collective -> להקה; NOT פרלמנט (legislature)."},
+
+    {"id": "ngp-boys-girls", "category": "number_gender_polarity", "arm": "frame", "he": "שלושה ילדים ושלוש ילדות", "gold_en": "three boys and three girls", "trap": "Hebrew number GENDER-POLARITY: שלושה (the ה-ending one) goes with MASCULINE (ילדים); שלוש (bare) with FEMININE (ילדות) - the opposite of every other agreement."},
+    {"id": "ngp-men-women", "category": "number_gender_polarity", "arm": "frame", "he": "ארבע נשים וארבעה גברים", "gold_en": "four women and four men", "trap": "ארבע (fem-looking) + women, ארבעה (masc-looking) + men. polarity holds 2-10."},
+
+    {"id": "dn-shoes-glasses", "category": "dual_number", "arm": "frame", "he": "קניתי זוג נעליים ומשקפיים חדשים", "gold_en": "I bought a pair of shoes and new glasses", "trap": "נעליים / משקפיים are inherent DUALS (suffix ־יים), not plurals; 'pair' is built into the form; agreement is plural."},
+    {"id": "dn-days-weeks", "category": "dual_number", "arm": "frame", "he": "חיכיתי יומיים ואולי שבועיים", "gold_en": "I waited two days and maybe two weeks", "trap": "יומיים = 'two days', שבועיים = 'two weeks' - the dual encodes 'two X' in ONE word; not the plural 'days/weeks'."},
+
+    {"id": "ps-book-shelf-house", "category": "pronominal_suffix", "arm": "frame", "he": "ספרו היה על מדפו ליד ביתה", "gold_en": "His book was on his shelf next to her house", "trap": "possessive SUFFIXES fused to the noun: ספרו=his book, מדפו=his shelf, ביתה=her house. one letter (ו vs ה) flips his/her."},
+    {"id": "ps-saw-him", "category": "pronominal_suffix", "arm": "frame", "he": "ראיתיו ואמרתי לו עליה", "gold_en": "I saw him and told him about her", "trap": "object + prepositional suffixes: ראיתיו = I-saw-him, לו = to-him, עליה = about-her - all single fused words."},
+
+    {"id": "pre-stack", "category": "prefix_stacking", "arm": "frame", "he": "וכשהגעתי מהבית שבכפר סיפרתי לו", "gold_en": "And when I arrived from the house in the village, I told him", "trap": "clitic stacks on one word: וכש = and-when, מה = from-the, שב = that-in. up to 5 prefixes (ו ש כ ל ב מ ה) must be peeled before the lemma."},
+
+    {"id": "cs-school-child", "category": "construct_state", "arm": "frame", "he": "בית הספר של הילד נסגר", "gold_en": "The child's school closed", "trap": "smikhut definiteness: 'THE school' = בית הספר - the article sits on the 2ND word only, NOT הבית ספר. בֵּית is the construct form of בַּיִת."},
+    {"id": "cs-pm-israel", "category": "construct_state", "arm": "frame", "he": "ראש ממשלת ישראל נאם", "gold_en": "The Prime Minister of Israel gave a speech", "trap": "chained smikhut ראש->ממשלת->ישראל; ממשלה->ממשלת construct form; definiteness inherited from the last element."},
+
+    {"id": "vp-use-miss", "category": "verb_preposition", "arm": "frame", "he": "השתמשתי במחשב והתגעגעתי אליך", "gold_en": "I used the computer and missed you", "trap": "idiomatic verb+preposition that does NOT map to English: השתמש בְּ (use+'in'), התגעגע אֶל (miss+'to'). pick the wrong prep -> ungrammatical."},
+    {"id": "vp-giveup-watch", "category": "verb_preposition", "arm": "frame", "he": "ויתרתי על הכסף אבל שמרתי על הילד", "gold_en": "I gave up the money but watched over the child", "trap": "ויתר עַל / שמר עַל - same Hebrew prep על, two different English ('up' / 'over')."},
+
+    {"id": "ep-have", "category": "existential_possession", "arm": "frame", "he": "יש לי כלב אבל אין לי חתול", "gold_en": "I have a dog but I don't have a cat", "trap": "Hebrew has NO verb 'to have': possession = יש לְ (there-is to-me) / negated אין לְ. a literal 'have' fails."},
+    {"id": "ep-copula", "category": "existential_possession", "arm": "frame", "he": "הוא רופא והיא מורה", "gold_en": "He is a doctor and she is a teacher", "trap": "no present-tense copula: הוא רופא = literally 'he doctor'. don't drop or mis-insert 'is'."},
+
+    {"id": "bin-learn-teach", "category": "binyanim", "arm": "frame", "he": "הוא למד בעוד שהמורה לימד", "gold_en": "He learned while the teacher taught", "trap": "one root ל-מ-ד, two binyanim: לָמַד (qal=learned) vs לִמֵּד (piel=taught). the pattern flips learn<->teach; bare למד/לימד differ by a single yod."},
+    {"id": "bin-kept-guarded", "category": "binyanim", "arm": "frame", "he": "הספר נשמר כי שמרתי עליו", "gold_en": "The book was kept because I guarded it", "trap": "root ש-מ-ר: נִשְׁמַר (nifal=was kept, passive) vs שָׁמַרְתִּי (qal=I guarded). binyan carries voice + meaning at once."},
+
+    {"id": "et-spade", "category": "et_marker", "arm": "frame", "he": "לקחתי את האת", "gold_en": "I took the spade", "trap": "both את identical bare: the FIRST is the definite-object MARKER (et - no meaning, untranslatable), the SECOND האת = 'the spade' (אֵת, a noun). also את = 'you'(fem, at). grammar-word vs noun homograph."},
+    {"id": "et-definite", "category": "et_marker", "arm": "frame", "he": "אכלתי את התפוח אבל לא תפוז", "gold_en": "I ate the apple but not an orange", "trap": "את appears ONLY before a DEFINITE object (התפוח), absent before the indefinite (תפוז). it has NO English word - never translate it."},
+
+    {"id": "kmh-program", "category": "ktiv_male_haser", "arm": "frame", "he": "תוכנית / תכנית", "gold_en": "a program (both spellings, same word)", "trap": "same word, full (male, with vav) vs defective (haser) spelling - both correct. must NOT be treated as two different words."},
+    {"id": "kmh-matzot", "category": "ktiv_male_haser", "arm": "frame", "he": "מצות", "gold_en": "matzas OR commandments (mitzvot)", "trap": "defective spelling collides: מצות = מַצּוֹת (matzas) OR the ktiv-haser of מצוות (commandments). spelling variation manufactures a homograph."},
+
+    {"id": "pli-tables", "category": "plural_irregular", "arm": "frame", "he": "שולחנות גדולים", "gold_en": "big tables", "trap": "שולחן is MASCULINE; plural שולחנות wears the fem-looking ־ות suffix, BUT the adjective is גדולים (masc) - agreement follows the noun's GENDER, not its suffix."},
+    {"id": "pli-years", "category": "plural_irregular", "arm": "frame", "he": "שנים רבות", "gold_en": "many years", "trap": "שנה is FEMININE; plural שנים wears the masc-looking ־ים suffix, but the adjective is רבות (fem). the suffix lies about gender. (cf. אב->אבות, איש->אנשים.)"},
+
+    {"id": "ig-road", "category": "inanimate_gender", "arm": "frame", "he": "הדרך ארוכה והשולחן גבוה", "gold_en": "the road is long and the table is tall", "trap": "arbitrary grammatical gender: דרך is FEMININE (ארוכה), שולחן MASCULINE (גבוה). nothing semantic signals it - the adjective must agree with the memorized lexical gender."},
+    {"id": "ig-sun-moon", "category": "inanimate_gender", "arm": "frame", "he": "השמש חמה והירח מלא", "gold_en": "the sun is hot and the moon is full", "trap": "שמש FEMININE (חמה), ירח MASCULINE (מלא) - the reverse of many languages. lexical gender, not derivable."},
+
+    {"id": "kk-all", "category": "kamatz_katan", "arm": "niqqud", "he": "כָּל הַמִּשְׁפָּחָה", "gold_en": "the whole family — read 'kol', not 'kal'", "trap": "the kamatz in כָּל is KAMATZ KATAN -> 'o' (kol), not the usual 'a'. closed unstressed syllable. a niqqud->phonetics engine reading it 'a' mispronounces."},
+    {"id": "kk-wisdom", "category": "kamatz_katan", "arm": "niqqud", "he": "חָכְמָה", "gold_en": "wisdom — read 'choch-ma'", "trap": "first kamatz is katan: חָכְ = 'choch' (o), not 'chach'. identical niqqud to kamatz gadol; only syllable structure/stress disambiguates a<->o."},
+
+    {"id": "ag-idf", "category": "acronym_gershayim", "arm": "frame", "he": "צה\"ל פעל בגבול הצפון", "gold_en": "The IDF operated on the northern border", "trap": "צה\"ל = an acronym (צבא הגנה לישראל = IDF), marked by gershayim (\"). read as a unit/expanded, NOT letter-by-letter and NOT as a quotation mark."},
+    {"id": "ag-date", "category": "acronym_gershayim", "arm": "frame", "he": "ביום י\"ד באייר", "gold_en": "on the 14th of Iyar", "trap": "י\"ד = the NUMBER 14 (yod=10 + dalet=4) in Hebrew letter-numerals, marked by gershayim. it is not a word. (cf. וכו' = etc., with a geresh.)"},
+
+    {"id": "neg-four", "category": "negation_variety", "arm": "frame", "he": "לא הלכתי, אין לי זמן, ואל תחכה לי", "gold_en": "I didn't go, I have no time, and don't wait for me", "trap": "three distinct negators: לא (didn't - verbal), אין (there-isn't - existential), אל (don't - prohibitive). English flattens to not/no/don't; Hebrew picks by context, and swapping them is ungrammatical."},
+    {"id": "neg-prohibit", "category": "negation_variety", "arm": "frame", "he": "אל תדאג, לא תיכשל", "gold_en": "Don't worry, you won't fail", "trap": "אל תדאג = 'don't worry' (prohibitive command); לא תיכשל = 'you will not fail' (future). אל negates commands only - לא תדאג would mean 'you won't worry'."},
+
+    {"id": "pn-writer", "category": "participle_noun", "arm": "frame", "he": "הכותב כותב מכתב", "gold_en": "The writer is writing a letter", "trap": "כותב = both 'a writer' (agent noun) and 'writes/writing' (present-tense verb) - identical word. Hebrew present tense IS the participle; role is syntactic."},
+    {"id": "pn-manager", "category": "participle_noun", "arm": "frame", "he": "המנהל מנהל את הפגישה", "gold_en": "The manager is running the meeting", "trap": "מנהל = 'manager' (noun) and 'manages/running' (verb), same form. (cf. שומר guard/guards, רוקד dancer/dances.)"}
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "_note": "Homograph TORTURE test - bare Hebrew (ktiv haser) engineered as a constraint-satisfaction puzzle: each homograph has multiple readings, and only ONE global assignment makes the whole passage coherent. GREEDY left-to-right reading commits a sense early and fails; only SYSTEMATIC solving (enumerate every reading-set from the lexicon, then pick the globally-consistent assignment) wins. Gold readings come from a native-speaker reviewer (ground truth). he->en + niqqud. See docs/homograph-torture-design.md.",
+  "items": [
+    {
+      "id": "hair-eyebrow-storm-boat",
+      "he": "הייתה לי שערה בגבה בזמן שהייתה שערה שטילטלה בסירה",
+      "gold_en": "I had a hair in my eyebrow, while a storm was rocking the boat.",
+      "gold_niqqud": "הָיְתָה לִי שַׂעֲרָה בְּגַבָּה בִּזְמַן שֶׁהָיְתָה סְעָרָה שֶׁטִּלְטְלָה בַּסִּירָה",
+      "homographs": [
+        {"bare": "שערה", "occ": 1, "reading": "שַׂעֲרָה", "sense": "a hair"},
+        {"bare": "גבה", "occ": 1, "reading": "גַּבָּה", "sense": "eyebrow"},
+        {"bare": "שערה", "occ": 2, "reading": "סְעָרָה", "sense": "a storm"}
+      ],
+      "facts": ["first שערה = a hair", "גבה = eyebrow (not back/height)",
+                "second שערה = a storm", "the storm - not a hair - rocks the boat"],
+      "note": "reviewer gold."
+    },
+    {
+      "id": "barber-minister-storm-sun-wrath",
+      "he": "בערב שלפני הסערה, סיפר הספר לשר ששר על הבקר: ספרתי את הספרים שהגיעו מן הספר, ומצאתי שערה בשמן, בעוד חמה שקעה וחמתי בערה",
+      "gold_en": "On the evening before the storm, the barber told the minister who was singing about the cattle: 'I counted the books that arrived from the frontier, and found a hair in the oil, while the sun set and my wrath burned.'",
+      "gold_niqqud": "בָּעֶרֶב שֶׁלִּפְנֵי הַסְּעָרָה, סִפֵּר הַסַּפָּר לַשַּׂר שֶׁשָּׁר עַל הַבָּקָר: סָפַרְתִּי אֶת הַסְּפָרִים שֶׁהִגִּיעוּ מִן הַסְּפָר, וּמָצָאתִי שַׂעֲרָה בַּשֶּׁמֶן, בְּעוֹד חַמָּה שָׁקְעָה וַחֲמָתִי בָּעֲרָה",
+      "homographs": [
+        {"bare": "ערב", "reading": "עֶרֶב", "sense": "evening (not Arab/guarantor/woof)"},
+        {"bare": "סערה", "reading": "סְעָרָה", "sense": "storm"},
+        {"bare": "ספר", "occ": 1, "reading": "סִפֵּר", "sense": "told"},
+        {"bare": "ספר", "occ": 2, "reading": "סַפָּר", "sense": "barber"},
+        {"bare": "שר", "occ": 1, "reading": "שַׂר", "sense": "minister"},
+        {"bare": "שר", "occ": 2, "reading": "שָׁר", "sense": "sang"},
+        {"bare": "בקר", "reading": "בָּקָר", "sense": "cattle (not morning/visit)"},
+        {"bare": "ספר", "occ": 3, "reading": "סָפַר", "sense": "counted"},
+        {"bare": "ספר", "occ": 4, "reading": "סְפָרִים", "sense": "books"},
+        {"bare": "ספר", "occ": 5, "reading": "סְפָר", "sense": "frontier/border"},
+        {"bare": "שערה", "reading": "שַׂעֲרָה", "sense": "a hair (note: same passage's סערה = storm)"},
+        {"bare": "שמן", "reading": "שֶׁמֶן", "sense": "oil (not fat)"},
+        {"bare": "חמה", "occ": 1, "reading": "חַמָּה", "sense": "sun (shakea=set -> sun)"},
+        {"bare": "חמה", "occ": 2, "reading": "חֵמָה", "sense": "wrath (חמתי = my wrath)"}
+      ],
+      "facts": [
+        "ספר resolves to FIVE different words: told / barber / counted / books / frontier",
+        "שר = minister the first time, sang the second",
+        "חמה = the sun (it set) the first time, wrath (it burned) the second",
+        "the same passage has סערה=storm AND שערה=hair (the prior item's trap, embedded)",
+        "בקר = cattle (sung about), not morning",
+        "every assignment is forced ONLY by the whole passage - a book can't 'tell', wrath can't 'set', a hair can't be sung about"
+      ],
+      "note": "the showcase. A greedy reader who commits 'ספר=book' at occurrence 1 derails. Reliable solving needs the full reading-set per token (lexicon) + a single globally-coherent assignment."
+    }
+  ]
+}
