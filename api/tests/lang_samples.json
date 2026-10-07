@@ -1,0 +1,19 @@
+{
+  "_doc": "Test vectors for the language registry: text | tokens | bare [input, output] pairs. All samples were written by the author of this toolkit and are not reviewed by speakers. VERIFIED in the registry refers only to the goldens, not to these samples.",
+  "en": {"text": "The water is cold.", "tokens": ["The", "water", "is", "cold"], "bare": [["Water", "water"]]},
+  "zh": {"text": "水很冷。", "tokens": ["水", "很", "冷"], "bare": [["水", "水"]]},
+  "hi": {"text": "पानी ठंडा है।", "tokens": ["पानी", "ठंडा", "है"], "bare": [["पानी", "पानी"]]},
+  "es": {"text": "El agua está fría.", "tokens": ["El", "agua", "está", "fría"], "bare": [["Está", "está"]]},
+  "ar": {"text": "الماء بارد.", "tokens": ["الماء", "بارد"], "bare": [["الْمَاءُ", "الماء"], ["بـارد", "بارد"]]},
+  "fr": {"text": "L'eau est froide.", "tokens": ["L", "eau", "est", "froide"], "bare": [["Froide", "froide"]]},
+  "bn": {"text": "জল ঠান্ডা।", "tokens": ["জল", "ঠান্ডা"], "bare": [["জল", "জল"]]},
+  "pt": {"text": "A água está fria.", "tokens": ["A", "água", "está", "fria"], "bare": [["Água", "água"]]},
+  "id": {"text": "Airnya dingin.", "tokens": ["Airnya", "dingin"], "bare": [["Dingin", "dingin"]]},
+  "ur": {"text": "پانی ٹھنڈا ہے۔", "tokens": ["پانی", "ٹھنڈا", "ہے"], "bare": [["پَانی", "پانی"]]},
+  "ru": {"text": "Вода холодная.", "tokens": ["Вода", "холодная"], "bare": [["Вода", "вода"]]},
+  "de": {"text": "Das Wasser ist kalt.", "tokens": ["Das", "Wasser", "ist", "kalt"], "bare": [["Straße", "strasse"]]},
+  "ja": {"text": "水は冷たい。", "tokens": ["水", "は", "冷", "た", "い"], "bare": [["水", "水"]]},
+  "pcm": {"text": "Di wata dey cold.", "tokens": ["Di", "wata", "dey", "cold"], "bare": [["Wata", "wata"]]},
+  "arz": {"text": "المية ساقعة.", "tokens": ["المية", "ساقعة"], "bare": [["مَيَّة", "مية"]]},
+  "he": {"text": "המים קרים.", "tokens": ["המים", "קרים"], "bare": [["הַמַּיִם", "המים"], ["שַׂעֲרָה", "שערה"]]}
+}
