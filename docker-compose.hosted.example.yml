@@ -1,0 +1,22 @@
+# Example override for the closed hosted demo. Copy it to docker-compose.hosted.yml on the
+# server (that name is git-ignored) and start the stack with
+#   docker compose -f docker-compose.yml -f docker-compose.hosted.yml up -d --build --wait
+# from a shell whose environment holds GEMINI_API_KEY, set at run time by a secrets wrapper.
+# This file holds no value for it; compose refuses to start without it. The app assumes it is
+# reachable only through a gated address that the hosting setup provides (it has no invite
+# mechanism of its own), and this repository ships no key. Pick a subnet that is free on the
+# server: TRUSTED_PROXIES must cover it, so the api trusts X-Forwarded-For from the web
+# container and from the docker gateway (where a reverse proxy on the host connects).
+# The hosted provider runs GEMINI_MODEL at its lowest effort level and its classifier on GEMINI_GATE_MODEL (both set in docker-compose.yml).
+services:
+  api:
+    environment:
+      HOSTED_PROVIDER: gemini
+      GEMINI_API_KEY: ${GEMINI_API_KEY:?set GEMINI_API_KEY in the environment at run time}
+      TRUSTED_PROXIES: 172.30.47.0/24
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 172.30.47.0/24
