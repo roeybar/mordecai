@@ -1,0 +1,12 @@
+{
+  "_doc": "Minimal vocabulary covering only the demo frames (demo_frames.json) and the unit tests.",
+  "version": 1,
+  "kinds": ["entity", "event", "quality", "function"],
+  "rels": ["has_part"],
+  "attrs": ["demo_set", "register"],
+  "attr_class": {"demo_set": "identity", "register": "surface"},
+  "cards": ["many"],
+  "slot_roles": ["agent", "patient", "located_at", "part_of"],
+  "surface_status": ["source", "auto", "verified", "locked"],
+  "frame_status": ["auto", "reviewed"]
+}
