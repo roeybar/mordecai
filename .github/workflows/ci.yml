@@ -1,0 +1,27 @@
+name: ci
+on: [push, pull_request]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose --profile tools run --rm check
+
+  api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose build api
+      - run: docker compose run --rm --no-deps api python -m pytest
+      - run: docker compose run --rm --no-deps api python -m mordecai.eval_torture --deterministic
+
+  e2e:
+    runs-on: ubuntu-latest
+    needs: api
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose up -d --build --wait
+      - run: docker compose --profile tools run --rm e2e
+      - if: always()
+        run: docker compose down -v
