@@ -1,0 +1,9 @@
+# Child safety. Universal, not bypassable.
+# Hebrew single tokens, refused in every context under every policy, before
+# the classifier, even where a term has an innocent sense.
+פדופיל
+פדופיליה
+פדופילים
+פדופיליות
+לוליקון
+שוטאקון

@@ -1,0 +1,32 @@
+# Child safety. Universal category, not bypassable.
+# Hand-curated. Checked on every request in every language, under every policy,
+# before the classifier; refused even where a term has an innocent sense.
+csam
+csem
+child porn
+child pornography
+childporn
+child sex
+child sexual
+child sexualization
+child sexualisation
+sexualized child
+sexualised child
+sexualized minor
+sexualised minor
+underage porn
+underage sex
+underage nude
+underage nudes
+minor sexual
+sex with a child
+sex with a minor
+pedophile
+paedophile
+pedophilia
+paedophilia
+pedophilic
+child grooming
+lolicon
+shotacon
+jailbait

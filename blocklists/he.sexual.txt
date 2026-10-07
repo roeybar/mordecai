@@ -1,0 +1,18 @@
+# Sexual content. Universal, not bypassable.
+# Hebrew single tokens, refused in every context under every policy, before
+# the classifier, even where a term has an innocent sense.
+זיון
+לזיין
+מזדיין
+מזדיינת
+שפיך
+אורגזמה
+אורגיה
+אוננות
+להזדיין
+ביאה
+משגל
+פורנו
+פורנוגרפיה
+פורנוגרפי
+אורגזמות
