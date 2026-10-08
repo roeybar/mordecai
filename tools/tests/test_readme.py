@@ -1,10 +1,12 @@
 """README checks: the challenge sentences are copied from the goldens exactly and each has its test,
-the languages table matches the registry, the README and the goldens name no third-party translator
-or model, and the README carries no unlabelled score and no bidi controls. The model ids configured
-in docker-compose.yml, and the lists of them, are product configuration: their cells in the README
-configuration table are exempt from the name check. Inside "## Configuration" the backticked product
-identifiers in PRODUCT_IDS and the one "Hosted demo: " paragraph (the hosted demo's data disclosure)
-are exempt as well."""
+the languages table matches the registry, the README, docs/configuration.md and the goldens name no
+third-party translator or model, and the README and docs/configuration.md carry no unlabelled score
+and no bidi controls. The configuration table and the model-and-effort, content-gate and hosted-demo
+paragraphs are in docs/configuration.md and are checked there; the whole of that file counts as a
+"## Configuration" section (CONFIG_SECTION). The model ids configured in docker-compose.yml, and the
+lists of them, are product configuration: their table cells are exempt from the name check inside a
+"## Configuration" section. Inside "## Configuration" the backticked product identifiers in PRODUCT_IDS
+and the one "Hosted demo: " paragraph (the hosted demo's data disclosure) are exempt as well."""
 import importlib
 import json
 import re
@@ -15,6 +17,9 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[2]
 README = (ROOT / "README.md").read_text(encoding="utf-8")
+CONFIG = (ROOT / "docs/configuration.md").read_text(encoding="utf-8")
+# The whole of docs/configuration.md as one "## Configuration" section, for the name check.
+CONFIG_SECTION = "## Configuration\n\n" + CONFIG
 TRANSLATE = (ROOT / "api/mordecai/routes/translate.py").read_text(encoding="utf-8")
 CH_PATH = ROOT / "api/mordecai/demo_data/challenges.json"
 CHALLENGES = json.loads(CH_PATH.read_text(encoding="utf-8"))["items"]
@@ -38,7 +43,7 @@ HEADINGS = [
     "## Try it here",
     "## What it is",
     "## Quickstart",
-    "## Why it is interesting",
+    "## Joint versus sequential disambiguation",
     "## Architecture",
     "## What the demo shows",
     "## Configuration",
@@ -122,7 +127,7 @@ def test_languages_table_matches_the_registry():
 
 def test_configured_model_ids_are_readme_table_cells():
     assert len(CONFIG_IDS) == 4
-    assert all(f"| `{mid}` |" in README for mid in CONFIG_IDS)
+    assert all(f"| `{mid}` |" in CONFIG for mid in CONFIG_IDS)
 
 
 def test_the_name_check_sees_every_name_and_spares_only_config_cells():
@@ -142,6 +147,8 @@ def test_the_name_check_sees_every_name_and_spares_only_config_cells():
 
 def test_the_readme_names_no_third_party_translator_or_model():
     assert NAMES.search(without_config_cells(README)) is None
+    assert NAMES.search(without_config_cells(CONFIG_SECTION)) is None
+    assert NAMES.search(CONFIG) is not None
 
 
 @pytest.mark.parametrize("name", GOLDEN_FILES)
@@ -152,17 +159,20 @@ def test_the_goldens_name_no_third_party_translator_or_model(name):
 def test_the_readme_carries_no_unlabelled_score():
     assert SCORE.search("got 4/7") and SCORE.search("4 of 7 right")
     assert SCORE.search(README) is None
+    assert SCORE.search(CONFIG) is None
 
 
 def test_no_bidi_controls():
     assert BIDI.search(README) is None
+    assert BIDI.search(CONFIG) is None
 
 
 def test_the_readme_describes_the_gate_as_built():
     for code in ("blocked_content", "gate_unavailable", "demo_examples_only"):
-        assert f'"{code}"' in README and f'"{code}"' in TRANSLATE
-    assert "word lists for English and Hebrew" not in README
-    assert "fails closed" in README
+        assert f'"{code}"' in CONFIG and f'"{code}"' in TRANSLATE
+    assert ("word lists for English and Hebrew" not in README
+            and "word lists for English and Hebrew" not in CONFIG)
+    assert "fails closed" in CONFIG
 
 
 def test_the_exemption_is_narrow():
@@ -183,11 +193,12 @@ def test_the_exemption_is_narrow():
 
 def test_the_readme_describes_the_hosted_demo_as_built():
     for code in ("demo_limit", "quota_exhausted"):
-        assert f'"{code}"' in README and f'"{code}"' in TRANSLATE
-    lines = [ln for ln in README.splitlines() if ln.startswith(HOSTED)]
+        assert f'"{code}"' in CONFIG and f'"{code}"' in TRANSLATE
+    lines = [ln for ln in CONFIG.splitlines() if ln.startswith(HOSTED)]
     assert len(lines) == 1
     line = lines[0]
-    assert README.index("## Configuration") < README.index(line) < README.index("## Languages")
+    assert CONFIG.index("| `HOSTED_PROVIDER` |") < CONFIG.index(line)
+    assert not any(ln.startswith(HOSTED) for ln in README.splitlines())
     for phrase in ("closed, invite-only", "gated address that the hosting setup provides", "ships no key",
                    "whichever provider is used",
                    "A request on this server counts once it passes the request checks, whichever provider, "
@@ -222,7 +233,7 @@ def test_the_hosted_override_example_holds_no_secret():
 
 def test_model_lists_are_readme_cells_and_hold_their_default():
     assert len(CONFIG_LISTS) == 4
-    assert all(f"| `{lst}` |" in README for lst in CONFIG_LISTS)
+    assert all(f"| `{lst}` |" in CONFIG for lst in CONFIG_LISTS)
     defaults = dict(re.findall(r"\$\{([A-Z]+)_MODEL:-([^}]+)\}", COMPOSE))
     lists = dict(re.findall(r"\$\{([A-Z]+)_MODELS:-([^}]+)\}", COMPOSE))
     assert sorted(defaults) == sorted(lists) == ["ANTHROPIC", "GEMINI", "OPENAI", "XAI"]
@@ -255,13 +266,13 @@ def test_the_contact_default_is_empty():
     sentence_a = ("This public toolkit is a demo on an example frame set, not the full mordecai; for the "
                   "full project, contact the author.")
     assert README.index(sentence_a) < README.index("## Two sentences")
-    assert "| `CONTACT_EMAIL` | (empty) |" in README
+    assert "| `CONTACT_EMAIL` | (empty) |" in CONFIG
     assert contact_files("@gmail" + ".com") == set()
 
 
 def test_the_readme_names_the_model_and_effort_errors():
     for code in ("unknown_model", "unknown_effort"):
-        assert f'"{code}"' in README and f'"{code}"' in TRANSLATE
+        assert f'"{code}"' in CONFIG and f'"{code}"' in TRANSLATE
     assert (
         "Model and effort: a translation request may name `model`, one of the provider's `*_MODELS` ids "
         "(absent means its `*_MODEL`), and `effort`, one of the levels that model accepts (absent means its "
@@ -273,10 +284,10 @@ def test_the_readme_names_the_model_and_effort_errors():
         '400 `{"error": "unknown_model"}`, and an effort the model does not accept gets 400 '
         '`{"error": "unknown_effort"}`. The translation\'s output cap is 1024 tokens at the lowest level or '
         "for a model without a level table, and 8192 above the lowest level, because thinking counts "
-        "against it.") in README
+        "against it.") in CONFIG
 
 
 def test_the_readme_states_the_fixed_classifier_model():
     assert ("The classifier calls run on a fixed model per provider at its lowest effort level, whatever "
             "model and effort you pick for the translation (`ANTHROPIC_GATE_MODEL`, `XAI_GATE_MODEL`, "
-            "`GEMINI_GATE_MODEL`, `OPENAI_GATE_MODEL`).") in README
+            "`GEMINI_GATE_MODEL`, `OPENAI_GATE_MODEL`).") in CONFIG
