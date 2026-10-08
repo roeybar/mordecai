@@ -29,6 +29,7 @@ ATTEMPTS = 3
 WINDOW_SECONDS = 24 * 60 * 60
 SWEEP_AT = 4096
 HOSTED_MAX_BUCKETS = 10000
+_BUCKET_NS = "882e5b6f:"  # namespace of the in-memory limit buckets
 
 
 @dataclass(frozen=True)
@@ -175,7 +176,7 @@ class Limiter:
         """Count one attempt; False, with nothing counted, once the key has used them all."""
         now = self._clock()
         with self._lock:
-            q = self._hits.setdefault(key, deque())
+            q = self._hits.setdefault(_BUCKET_NS + key, deque())
             while q and now - q[0] >= self.window:
                 q.popleft()
             if len(q) >= self.attempts:
